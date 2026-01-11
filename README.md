@@ -13,3 +13,6 @@
 12) create the app/cache/redis_cache.py for creating the cache check and store 
 13) create app/services/model_service.py to predict value using model
 14) create app/api/routes_predict.py to connect with router
+15) create middleware/logging_middleware.py for creating the logging
+16) create main.py
+17) create frontend.py

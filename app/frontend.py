@@ -309,17 +309,57 @@ def handle_prediction_submission(fixed_acidity, volatile_acidity, citric_acid, r
 # 4. MAIN CONTROLLER
 # ==========================================
 
+def render_home_page():
+    st.title("🍷 WineMeUp: Intelligent Quality Prediction")
+    st.markdown("### An End-to-End MLOps Project")
+    
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        st.write("""
+        **WineMeUp** is a full-stack AI application designed to analyze chemical properties 
+        of wine and predict its quality with high precision.
+        
+        This project demonstrates a complete Data Science lifecycle:
+        * **Data Engineering:** Automated pipelines for cleaning and validation.
+        * **EDA:** Deep dive analysis into chemical correlations.
+        * **Model Analysis:** A "Tournament" of 6 algorithms (XGBoost, CatBoost, etc.) 
+            tuned via Bayesian Optimization (Optuna).
+        * **Deployment:** FastAPI backend with Redis caching and Docker containerization.
+        """)
+        
+        st.markdown("### 🛠️ Tech Stack")
+        st.code("Python | Pandas | Scikit-Learn | Optuna | FastAPI | Redis | Streamlit | Docker | Nginx", language="text")
+
+    with col2:
+        st.info("🔗 **Project Resources**")
+        st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/your-repo)")
+        st.markdown("[![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-blue?logo=kaggle)](https://www.kaggle.com/datasets/yasserh/wine-quality-dataset)")
+        st.markdown("[![Jupyter](https://img.shields.io/badge/Notebooks-Research-orange?logo=jupyter)](https://github.com/your-repo/notebooks)")
+
+    st.divider()
+    st.success("👈 **Navigate using the sidebar to see the EDA, Model Experiments, or Live Prediction.**")
+
 def main():
+    st.sidebar.image("https://img.icons8.com/color/96/wine-bottle.png", width=80)
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to:", ["1. EDA & Insights", "2. Model Experiments", "3. Prediction System"])
+    
+    # ADD "Project Overview" as the first option
+    page = st.sidebar.radio("Go to:", [
+        "🏠 Project Overview", 
+        "1. EDA & Insights", 
+        "2. Model Experiments", 
+        "3. Live Prediction"
+    ])
 
     artifacts = load_artifacts()
 
-    if page == "1. EDA & Insights":
+    if page == "🏠 Project Overview":
+        render_home_page()
+    elif page == "1. EDA & Insights":
         render_eda_page(artifacts)
     elif page == "2. Model Experiments":
         render_models_page(artifacts)
-    elif page == "3. Prediction System":
+    elif page == "3. Live Prediction":
         render_prediction_page()
 
 if __name__ == "__main__":
