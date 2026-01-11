@@ -241,7 +241,7 @@ def run_tuned_tournament(df: pd.DataFrame) -> Dict[str, Any]:
         
         # CHANGED: Increased n_trials from 5 to 20
         study = optuna.create_study(direction='maximize')
-        study.optimize(lambda t: objective_factory(t, name, X, y, skf), n_trials=20) 
+        study.optimize(lambda t: objective_factory(t, name, X, y, skf), n_trials=150) 
         
         print(f"      Best Kappa: {study.best_value:.4f}")
         
@@ -255,7 +255,7 @@ def run_tuned_tournament(df: pd.DataFrame) -> Dict[str, Any]:
         'title': "3. Final Leaderboard (Hyperparameter Tuned)",
         'type': 'tuned_leaderboard',
         'data': {'results': pd.DataFrame(results).sort_values(by="Best Kappa Score", ascending=False)},
-        'comment': "Performance after giving every model a fair chance via Bayesian Optimization (20 Trials).",
+        'comment': "Performance after giving every model a fair chance via Bayesian Optimization (150 Trials).",
         'code': "# Optuna Loop..."
     }
 

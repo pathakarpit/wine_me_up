@@ -10,3 +10,6 @@
 9) create training/perform_eda.py to store eda results
 10) create training/perform_model_analysis.py to store model comparison results
 11) create training/train_model.py for creating models that will be used to predict
+12) create the app/cache/redis_cache.py for creating the cache check and store 
+13) create app/services/model_service.py to predict value using model
+14) create app/api/routes_predict.py to connect with router
