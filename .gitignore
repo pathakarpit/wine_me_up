@@ -211,3 +211,4 @@ notebooks/*
 catboost_info/*
 app/models/*
 app/__pycache__/*
+app/data/*

@@ -7,4 +7,6 @@
 6) create api/routes_auth.py to define the login route for user auth using JWT
 7) work on the data and experiment using jupyter notebooks
 8) create training/utils.py for writing convinience functions
-9) create training/train_model.py for creating models that will be used to predict
+9) create training/perform_eda.py to store eda results
+10) create training/perform_model_analysis.py to store model comparison results
+11) create training/train_model.py for creating models that will be used to predict

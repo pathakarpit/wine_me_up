@@ -5,7 +5,7 @@ import os
 import sys
 
 # Import our project settings
-import train_utils
+from training.train_utils import DATA_FILE_PATH, MODEL_DIR
 
 # Import Models
 from sklearn.ensemble import RandomForestClassifier
@@ -13,18 +13,18 @@ from sklearn.svm import SVC
 import xgboost as xgb
 import lightgbm as lgb
 from catboost import CatBoostClassifier
-
+ 
 def load_and_clean_data():
     """
     Loads data and performs EDA-based cleaning.
     """
-    print(f"Loading data from {train_utils.DATA_FILE_PATH}...")
+    print(f"Loading data from {DATA_FILE_PATH}...")
     
     # 1. Load Data
     try:
-        df = pd.read_csv(train_utils.DATA_FILE_PATH)
+        df = pd.read_csv(DATA_FILE_PATH)
     except FileNotFoundError:
-        sys.exit(f"Error: Data file not found at {train_utils.DATA_FILE_PATH}")
+        sys.exit(f"Error: Data file not found at {DATA_FILE_PATH}")
 
     # 2. Drop irrelevant columns (Found in EDA)
     if 'Id' in df.columns:
@@ -103,13 +103,13 @@ def save_models(trained_models):
     print("\n--- Saving Models ---")
 
     # Ensure the directory exists
-    if not os.path.exists(train_utils.MODEL_DIR):
-        os.makedirs(train_utils.MODEL_DIR)
-        print(f"Created directory: {train_utils.MODEL_DIR}")
+    if not os.path.exists(MODEL_DIR):
+        os.makedirs(MODEL_DIR)
+        print(f"Created directory: {MODEL_DIR}")
 
     for name, model in trained_models.items():
         # CHANGE: Use .joblib extension
-        file_path = os.path.join(train_utils.MODEL_DIR, f"model_{name}.joblib")
+        file_path = os.path.join(MODEL_DIR, f"model_{name}.joblib")
         
         joblib.dump(model, file_path)
         print(f"   -> Saved to {file_path}")
