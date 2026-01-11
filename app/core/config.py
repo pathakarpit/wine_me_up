@@ -9,9 +9,12 @@ class Settings:
     JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY")
     JWT_ALGORITHM: str = "HS256" 
     REDIS_URL: str = os.getenv("REDIS_URL")
+    
     MODEL_DIR: str = "app/models"
     MODEL_NAME: str = "default_model.joblib"
     MODEL_PATH: str = os.path.join(MODEL_DIR, MODEL_NAME)
+
+    ENV: str = os.getenv("ENV", "development")
 
     @classmethod
     def set_model_name(cls, name: str) -> None:

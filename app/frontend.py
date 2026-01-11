@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import requests
 import plotly.express as px
-
+from dotenv import load_dotenv
+load_dotenv()
 # --- CONFIGURATION ---
 st.set_page_config(page_title="Wine Quality AI", page_icon="🍷", layout="wide")
 
@@ -247,6 +248,7 @@ def render_prediction_page():
     with st.form("prediction_form"):
         col1, col2, col3 = st.columns(3)
         
+        # ... (Inputs for Alcohol, pH, etc. remain the same) ...
         with col1:
             alcohol = st.number_input("Alcohol", 8.0, 15.0, 10.0)
             volatile_acidity = st.number_input("Volatile Acidity", 0.1, 1.6, 0.5)
@@ -263,14 +265,32 @@ def render_prediction_page():
             density = st.number_input("Density", 0.990, 1.005, 0.996, format="%.4f")
             pH = st.number_input("pH", 2.7, 4.0, 3.3)
             fixed_acidity = st.number_input("Fixed Acidity", 4.0, 16.0, 7.0)
-            model_choice = st.selectbox("Select Model", ["default", "random_forest", "xgboost", "lightgbm_regressor"])
+            
+            # --- UPDATED MODEL SELECTOR ---
+            # Map technical keys to friendly names
+            model_display_names = {
+                "default": "🏆 Best Model (Default)",
+                "lightgbm_regressor": "🚀 LightGBM (Tuned - Secret Weapon)",
+                "xgboost": "⚡ XGBoost",
+                "catboost": "🐱 CatBoost",
+                "random_forest": "🌲 Random Forest",
+                "lightgbm_classifier": "💡 LightGBM (Classifier)",
+                "svc": "📉 Support Vector Machine"
+            }
+            
+            model_choice_key = st.selectbox(
+                "Select Model Strategy", 
+                options=list(model_display_names.keys()),
+                format_func=lambda x: model_display_names.get(x)
+            )
 
         submitted = st.form_submit_button("Predict Quality")
     
     if submitted:
+        # Pass the 'model_choice_key' (technical name) to the handler
         handle_prediction_submission(fixed_acidity, volatile_acidity, citric_acid, residual_sugar, 
                                      chlorides, free_sulfur, total_sulfur, density, pH, sulphates, 
-                                     alcohol, model_choice)
+                                     alcohol, model_choice_key)
 
 def handle_prediction_submission(fixed_acidity, volatile_acidity, citric_acid, residual_sugar, 
                                  chlorides, free_sulfur, total_sulfur, density, pH, sulphates, 
@@ -283,8 +303,21 @@ def handle_prediction_submission(fixed_acidity, volatile_acidity, citric_acid, r
         "pH": pH, "sulphates": sulphates, "alcohol": alcohol
     }
     
+    # --- FIX START: Define Headers with API Key ---
+    # For local testing, we use the default key "my-secret-key"
+    # In production, this comes from your environment variables
+    api_key = os.getenv("API_KEY", "my-secret-key")
+    
+    headers = {
+        "api-key": api_key,
+        "Content-Type": "application/json"
+    }
+    # --- FIX END ---
+    
     try:
-        response = requests.post(f"{API_URL}/{model_choice}", json=payload)
+        # Pass headers=headers to the request
+        response = requests.post(f"{API_URL}/{model_choice}", json=payload, headers=headers)
+        
         if response.status_code == 200:
             result = response.json()
             quality = result['predicted_quality']
@@ -302,6 +335,7 @@ def handle_prediction_submission(fixed_acidity, volatile_acidity, citric_acid, r
                 st.json(result)
         else:
             st.error(f"API Error: {response.text}")
+            
     except Exception as e:
         st.error(f"Failed to connect to backend. Is 'main.py' running? Error: {e}")
 

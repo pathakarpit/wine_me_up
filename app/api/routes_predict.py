@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from app.core.dependencies import get_api_key, get_current_user
-from app.services.model_services import predict_wine_quality # Ensure import matches filename
+from app.core.dependencies import get_api_key#, get_current_user
+from app.services.model_service import predict_wine_quality # Ensure import matches filename
 
 router = APIRouter()
 
@@ -25,7 +25,7 @@ class WineFeatures(BaseModel):
 def predict_quality(
     model_name: str,              # <--- Capture model name from URL
     wine: WineFeatures,           # <--- Capture features from JSON Body
-    user=Depends(get_current_user),
+    #user=Depends(get_current_user),
     _=Depends(get_api_key)
 ):
     try:

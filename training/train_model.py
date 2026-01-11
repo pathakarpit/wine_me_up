@@ -109,7 +109,7 @@ def save_models(trained_models):
 
     for name, model in trained_models.items():
         # CHANGE: Use .joblib extension
-        file_path = os.path.join(MODEL_DIR, f"model_{name}.joblib")
+        file_path = os.path.join(MODEL_DIR, f"{name}.joblib")
         
         joblib.dump(model, file_path)
         print(f"   -> Saved to {file_path}")

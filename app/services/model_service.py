@@ -82,14 +82,28 @@ def predict_wine_quality(data: dict, model_name: str):
     # Convert input dict to DataFrame (ensures column names match training)
     input_df = pd.DataFrame([data])
     
+    column_mapping = {
+        "fixed_acidity": "fixed acidity",
+        "volatile_acidity": "volatile acidity",
+        "citric_acid": "citric acid",
+        "residual_sugar": "residual sugar",
+        "chlorides": "chlorides", # No change needed, but kept for clarity
+        "free_sulfur_dioxide": "free sulfur dioxide",
+        "total_sulfur_dioxide": "total sulfur dioxide",
+        "density": "density",
+        "pH": "pH",
+        "sulphates": "sulphates",
+        "alcohol": "alcohol"
+    }
+    input_df = input_df.rename(columns=column_mapping)
     # --- STEP 4: PREDICT ---
     try:
-        raw_prediction = model.predict(input_df)[0]
-        
+        prediction_output = model.predict(input_df)[0]
+        raw_value = float(prediction_output)
         # Logic: If it's a Regressor (Secret Weapon), we round the float.
         # If it's a Classifier, it returns an int directly, but round() is safe for both.
-        final_quality = int(round(raw_prediction))
-        
+        final_quality = int(round(raw_value))
+
     except Exception as e:
         raise RuntimeError(f"Prediction failed during inference: {e}")
 
