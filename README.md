@@ -16,3 +16,7 @@
 15) create middleware/logging_middleware.py for creating the logging
 16) create main.py
 17) create frontend.py
+18) test run locally then deploy on your server
+19) create dockerfile for api and frontend
+20) create docker-compose.yml
+21) create requirements.txt

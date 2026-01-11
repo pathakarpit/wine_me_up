@@ -1,0 +1,34 @@
+services:
+  # --- Redis Database ---
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # --- FastAPI Backend ---
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    env_file: .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app/models:/app/app/models  # Mount your trained models
+
+  # --- Streamlit Frontend ---
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    env_file: .env
+    environment:
+      - API_URL=http://api:8000/predict
+    depends_on:
+      - api
+    ports:
+      - "8501:8501"
