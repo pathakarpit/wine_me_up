@@ -4,6 +4,17 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+  
+  #Redis Exporter (The Translator)
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: redis_exporter
+    environment:
+      - REDIS_ADDR=redis://redis:6379
+    depends_on:
+      - redis
+    ports:
+      - "9121:9121"
 
   # --- FastAPI Backend ---
   api:
@@ -32,3 +43,14 @@ services:
       - api
     ports:
       - "8501:8501"
+
+    # --- Monitoring Stack ---
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api

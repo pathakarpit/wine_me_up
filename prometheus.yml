@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s # How often to grab metrics (default is 1m)
+  evaluation_interval: 15s
+
+scrape_configs:
+  # 1. Monitor the FastAPI Backend
+  - job_name: "fastapi-metrics"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["api:8000"]
+
+  # 2. Monitor Prometheus itself (Optional but standard)
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+  # 3. Scrape Redis metrics from the exporter
+  - job_name: "redis-metrics"
+    static_configs:
+      - targets: ["redis-exporter:9121"]
