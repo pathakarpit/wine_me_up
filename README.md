@@ -5,3 +5,6 @@
 4) create core/dependencies.py to inject logic for API key and JWT token validation
 5) create core/exceptions.py for custom exception handler
 6) create api/routes_auth.py to define the login route for user auth using JWT
+7) work on the data and experiment using jupyter notebooks
+8) create training/utils.py for writing convinience functions
+9) create training/train_model.py for creating models that will be used to predict
