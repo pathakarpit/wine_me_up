@@ -86,4 +86,4 @@ The entire stack is containerized. To replicate this production environment:
 ## 👤 About the Developer
 I am a Data Scientist & Machine Learning Engineer focused on the intersection of **Mathematical Modeling** and **Scalable Software Architecture**. I build tools that don't just work—they perform.
 
-**Connect with me:** [LinkedIn](https://linkedin.com/in/yourprofile) | [Portfolio](https://patech.in)
+**Connect with me:** [LinkedIn](https://www.linkedin.com/in/pathakarpit/) | [Portfolio](https://patech.in)
