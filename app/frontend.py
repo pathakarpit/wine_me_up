@@ -366,9 +366,8 @@ def render_home_page():
 
     with col2:
         st.info("🔗 **Project Resources**")
-        st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/your-repo)")
+        st.markdown("[![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/pathakarpit/wine_me_up)")
         st.markdown("[![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-blue?logo=kaggle)](https://www.kaggle.com/datasets/yasserh/wine-quality-dataset)")
-        st.markdown("[![Jupyter](https://img.shields.io/badge/Notebooks-Research-orange?logo=jupyter)](https://github.com/your-repo/notebooks)")
 
     st.divider()
     st.success("👈 **Navigate using the sidebar to see the EDA, Model Experiments, or Live Prediction.**")
